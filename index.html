@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Browser RTS MVP (Static Vanilla JS)</title>
+    <style>
+      :root { color-scheme: dark; }
+      body { margin: 0; font-family: Arial, sans-serif; background: #0d1218; color: #eaf2ff; }
+      #app { display: grid; grid-template-rows: 1fr auto; min-height: 100vh; }
+      #view { display: flex; justify-content: center; align-items: center; padding: 12px; }
+      canvas { border: 1px solid #273546; background: #152232; max-width: 100%; height: auto; }
+      #hud {
+        display: flex; justify-content: space-between; gap: 12px; align-items: center;
+        padding: 10px 14px; background: #0f1b28; border-top: 1px solid #273546; font-size: 14px;
+      }
+      .pill { background: #1a2a3d; border: 1px solid #334c66; border-radius: 999px; padding: 4px 10px; }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div id="view">
+        <canvas id="rts-canvas" width="1024" height="640" aria-label="RTS game view"></canvas>
+      </div>
+      <div id="hud">
+        <div class="pill" id="hud-status">Status: Booting...</div>
+        <div class="pill" id="hud-selection">Selected: 0</div>
+        <div class="pill">Controls: drag-box select • right-click move</div>
+      </div>
+    </div>
+    <script type="module" src="./src/client/main.js"></script>
+  </body>
+</html>

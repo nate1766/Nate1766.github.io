@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["units"],
+  "properties": {
+    "units": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "hp", "speed", "vision", "attack", "cost", "buildTime"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "hp": { "type": "number", "minimum": 1 },
+          "speed": { "type": "number", "minimum": 0 },
+          "vision": { "type": "number", "minimum": 0 },
+          "attack": { "type": "number", "minimum": 0 },
+          "cost": { "type": "number", "minimum": 0 },
+          "buildTime": { "type": "number", "minimum": 0 }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
