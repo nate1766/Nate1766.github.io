@@ -195,8 +195,8 @@
     }
 
     centerCamera(wx, wy) {
-      this.renderer.camera.x = wx - this.canvas.width / this.renderer.camera.zoom / 2;
-      this.renderer.camera.y = wy - this.canvas.height / this.renderer.camera.zoom / 2;
+      this.renderer.camera.x = wx - this.renderer.viewportWidth / this.renderer.camera.zoom / 2;
+      this.renderer.camera.y = wy - this.renderer.viewportHeight / this.renderer.camera.zoom / 2;
     }
 
     frame(ts) {
@@ -224,11 +224,11 @@
       if (this.keys.has('d')) this.renderer.camera.x += speed;
       const margin = 16;
       if (this.mouse.x < margin) this.renderer.camera.x -= speed;
-      if (this.mouse.x > this.canvas.width - margin) this.renderer.camera.x += speed;
+      if (this.mouse.x > this.renderer.viewportWidth - margin) this.renderer.camera.x += speed;
       if (this.mouse.y < margin) this.renderer.camera.y -= speed;
-      if (this.mouse.y > this.canvas.height - margin) this.renderer.camera.y += speed;
-      this.renderer.camera.x = Math.max(0, Math.min(this.game.world.width - this.canvas.width / this.renderer.camera.zoom, this.renderer.camera.x));
-      this.renderer.camera.y = Math.max(0, Math.min(this.game.world.height - this.canvas.height / this.renderer.camera.zoom, this.renderer.camera.y));
+      if (this.mouse.y > this.renderer.viewportHeight - margin) this.renderer.camera.y += speed;
+      this.renderer.camera.x = Math.max(0, Math.min(this.game.world.width - this.renderer.viewportWidth / this.renderer.camera.zoom, this.renderer.camera.x));
+      this.renderer.camera.y = Math.max(0, Math.min(this.game.world.height - this.renderer.viewportHeight / this.renderer.camera.zoom, this.renderer.camera.y));
     }
 
     refreshTopBar(state) {
@@ -277,12 +277,11 @@
         ctx.fillRect(u.x * sx, u.y * sy, 2, 2);
       }
       ctx.strokeStyle = '#fff';
-      ctx.strokeRect(this.renderer.camera.x * sx, this.renderer.camera.y * sy, this.canvas.width / this.renderer.camera.zoom * sx, this.canvas.height / this.renderer.camera.zoom * sy);
+      ctx.strokeRect(this.renderer.camera.x * sx, this.renderer.camera.y * sy, this.renderer.viewportWidth / this.renderer.camera.zoom * sx, this.renderer.viewportHeight / this.renderer.camera.zoom * sy);
     }
 
     resize() {
-      this.canvas.width = window.innerWidth;
-      this.canvas.height = window.innerHeight;
+      this.renderer.setViewportSize(window.innerWidth, window.innerHeight, window.devicePixelRatio || 1);
       this.centerCamera(900, 900);
     }
   }
