@@ -1,0 +1,58 @@
+{
+  "config": {
+    "tickRate": 20,
+    "world": { "width": 6400, "height": 6400, "cell": 80 },
+    "fog": { "cell": 80 }
+  },
+  "factions": {
+    "A": {
+      "name": "Faction A",
+      "color": "#4ea1ff",
+      "builderMode": "persistent",
+      "requiresCreep": false,
+      "requiresPower": false,
+      "supplyProvider": "depot",
+      "townHall": "command_center",
+      "worker": "worker_a"
+    },
+    "B": {
+      "name": "Faction B",
+      "color": "#a06bff",
+      "builderMode": "consumed",
+      "requiresCreep": true,
+      "requiresPower": false,
+      "supplyProvider": "overnode",
+      "townHall": "hive",
+      "worker": "worker_b"
+    },
+    "C": {
+      "name": "Faction C",
+      "color": "#ffd34e",
+      "builderMode": "warp",
+      "requiresCreep": false,
+      "requiresPower": true,
+      "supplyProvider": "pylon",
+      "townHall": "temple",
+      "worker": "worker_c"
+    }
+  },
+  "units": {
+    "worker_a": { "name": "Worker", "hp": 40, "speed": 68, "vision": 360, "radius": 22, "damage": 4, "range": 42, "attackCooldown": 20, "supply": 1, "cost": {"minerals": 50, "gas": 0}, "buildTime": 14, "cargo": 8 },
+    "worker_b": { "name": "Worker", "hp": 34, "speed": 72, "vision": 350, "radius": 22, "damage": 3, "range": 40, "attackCooldown": 22, "supply": 1, "cost": {"minerals": 50, "gas": 0}, "buildTime": 14, "cargo": 8 },
+    "worker_c": { "name": "Worker", "hp": 36, "speed": 74, "vision": 350, "radius": 22, "damage": 3, "range": 40, "attackCooldown": 22, "supply": 1, "cost": {"minerals": 50, "gas": 0}, "buildTime": 14, "cargo": 8 },
+    "melee": { "name": "Melee", "hp": 95, "speed": 78, "vision": 360, "radius": 24, "damage": 8, "range": 30, "attackCooldown": 16, "supply": 2, "cost": {"minerals": 90, "gas": 0}, "buildTime": 22 },
+    "ranged": { "name": "Ranged", "hp": 62, "speed": 74, "vision": 410, "radius": 22, "damage": 10, "range": 220, "attackCooldown": 24, "projectileSpeed": 350, "supply": 2, "cost": {"minerals": 70, "gas": 35}, "buildTime": 24 },
+    "heavy": { "name": "Heavy", "hp": 180, "speed": 50, "vision": 360, "radius": 28, "damage": 20, "range": 45, "attackCooldown": 28, "supply": 4, "cost": {"minerals": 120, "gas": 80}, "buildTime": 34 }
+  },
+  "structures": {
+    "command_center": { "name": "Town Hall", "hp": 1200, "size": 150, "cost": {"minerals": 0, "gas": 0}, "buildTime": 0, "providesSupply": 12, "train": ["worker_a"], "creepRadius": 0, "powerRadius": 0 },
+    "hive": { "name": "Hive", "hp": 1100, "size": 150, "cost": {"minerals": 0, "gas": 0}, "buildTime": 0, "providesSupply": 10, "train": ["worker_b", "melee", "ranged"], "creepRadius": 520, "larvaMax": 3, "larvaRegen": 11, "powerRadius": 0 },
+    "temple": { "name": "Temple", "hp": 1200, "size": 150, "cost": {"minerals": 0, "gas": 0}, "buildTime": 0, "providesSupply": 12, "train": ["worker_c"], "creepRadius": 0, "powerRadius": 0 },
+    "depot": { "name": "Supply Depot", "hp": 420, "size": 90, "cost": {"minerals": 100, "gas": 0}, "buildTime": 20, "providesSupply": 8, "train": [] },
+    "overnode": { "name": "Overnode", "hp": 280, "size": 80, "cost": {"minerals": 100, "gas": 0}, "buildTime": 18, "providesSupply": 8, "train": [], "creepRadius": 260 },
+    "pylon": { "name": "Pylon", "hp": 320, "size": 88, "cost": {"minerals": 100, "gas": 0}, "buildTime": 18, "providesSupply": 8, "train": [], "powerRadius": 330 },
+    "barracks": { "name": "Barracks", "hp": 700, "size": 120, "cost": {"minerals": 150, "gas": 0}, "buildTime": 26, "providesSupply": 0, "train": ["melee", "ranged"] },
+    "factory": { "name": "Factory", "hp": 900, "size": 130, "cost": {"minerals": 170, "gas": 70}, "buildTime": 32, "providesSupply": 0, "train": ["heavy"] },
+    "refinery": { "name": "Extractor", "hp": 520, "size": 100, "cost": {"minerals": 75, "gas": 0}, "buildTime": 20, "providesSupply": 0, "train": [], "isGas": true }
+  }
+}
