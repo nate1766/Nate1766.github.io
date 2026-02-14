@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>RTS Prototype</title>
+  <style>
+    html,body{margin:0;height:100%;overflow:hidden;background:#0a0e13;color:#d8e6ff;font-family:system-ui,sans-serif}
+    #game{display:block;width:100vw;height:100vh}
+    #hud{position:fixed;inset:0;pointer-events:none}
+    #top{position:absolute;top:8px;left:8px;right:8px;display:flex;gap:12px;justify-content:space-between}
+    .panel{background:rgba(7,13,20,.78);border:1px solid #2d3e53;padding:8px;border-radius:8px;pointer-events:auto}
+    #bottom{position:absolute;left:8px;right:8px;bottom:8px;display:grid;grid-template-columns:320px 1fr 240px;gap:8px;align-items:end}
+    #minimap{width:220px;height:220px;background:#111;border:1px solid #38506b;pointer-events:auto}
+    #buildButtons button,#trainButtons button{margin:4px;padding:6px;background:#223247;color:#ecf4ff;border:1px solid #456184;border-radius:4px}
+    #alerts .urgent{color:#ff8e8e}
+    .hidden{display:none}
+  </style>
+</head>
+<body>
+  <canvas id="game"></canvas>
+  <div id="hud">
+    <div id="top">
+      <div class="panel" id="res">Minerals 0 | Gas 0 | Supply 0/0</div>
+      <div class="panel"><button id="jumpAlert">Jump Alert (Space)</button><div id="alerts"></div></div>
+    </div>
+    <div id="bottom">
+      <div class="panel">
+        <h4>Selection</h4>
+        <div id="sel">No selection</div>
+      </div>
+      <div class="panel">
+        <h4>Commands</h4>
+        <div id="buildButtons">
+          <button data-build="depot">Build Depot</button>
+          <button data-build="overnode">Build Overnode</button>
+          <button data-build="pylon">Build Pylon</button>
+          <button data-build="barracks">Build Barracks</button>
+          <button data-build="factory">Build Factory</button>
+          <button data-build="refinery">Build Extractor</button>
+        </div>
+        <div id="trainButtons"></div>
+        <div>A: attack-move, Right click: context, B: build panel toggle, S: stop</div>
+      </div>
+      <div class="panel">
+        <h4>Minimap</h4>
+        <canvas id="minimap" width="220" height="220"></canvas>
+      </div>
+    </div>
+  </div>
+  <script src="game.js"></script>
+  <script src="render.js"></script>
+  <script src="ui.js"></script>
+</body>
+</html>
