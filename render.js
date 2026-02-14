@@ -7,6 +7,21 @@
       this.camera = { x: 0, y: 0, zoom: 1 };
       this.selection = [];
       this.dragBox = null;
+      this.dpr = 1;
+      this.viewportWidth = canvas.clientWidth || 0;
+      this.viewportHeight = canvas.clientHeight || 0;
+    }
+
+    setViewportSize(cssWidth, cssHeight, dpr = window.devicePixelRatio || 1) {
+      const safeDpr = Math.max(1, dpr);
+      this.dpr = safeDpr;
+      this.viewportWidth = cssWidth;
+      this.viewportHeight = cssHeight;
+      this.canvas.style.width = `${cssWidth}px`;
+      this.canvas.style.height = `${cssHeight}px`;
+      this.canvas.width = Math.round(cssWidth * safeDpr);
+      this.canvas.height = Math.round(cssHeight * safeDpr);
+      this.ctx.setTransform(safeDpr, 0, 0, safeDpr, 0, 0);
     }
 
     worldToScreen(x, y) {
@@ -19,7 +34,9 @@
 
     draw(state, localPlayerId) {
       const { ctx, canvas } = this;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
       this.drawTerrain(state);
       this.drawOverlays(state);
       this.drawResources(state);
@@ -35,15 +52,15 @@
     }
 
     drawTerrain(state) {
-      const { ctx, canvas } = this;
+      const { ctx } = this;
       ctx.fillStyle = '#1d232d';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillRect(0, 0, this.viewportWidth, this.viewportHeight);
       ctx.strokeStyle = 'rgba(255,255,255,0.04)';
       const step = 80 * this.camera.zoom;
       const startX = (-this.camera.x * this.camera.zoom) % step;
       const startY = (-this.camera.y * this.camera.zoom) % step;
-      for (let x = startX; x < canvas.width; x += step) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke(); }
-      for (let y = startY; y < canvas.height; y += step) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke(); }
+      for (let x = startX; x < this.viewportWidth; x += step) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, this.viewportHeight); ctx.stroke(); }
+      for (let y = startY; y < this.viewportHeight; y += step) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(this.viewportWidth, y); ctx.stroke(); }
     }
 
     drawOverlays(state) {
@@ -133,7 +150,7 @@
     }
 
     drawFog(state) {
-      const { ctx, canvas } = this;
+      const { ctx } = this;
       const fog = state.fog;
       for (let y = 0; y < fog.h; y++) {
         for (let x = 0; x < fog.w; x++) {
@@ -144,7 +161,7 @@
           const sx = (x * fog.cell - this.camera.x) * this.camera.zoom;
           const sy = (y * fog.cell - this.camera.y) * this.camera.zoom;
           const s = fog.cell * this.camera.zoom + 1;
-          if (sx > canvas.width || sy > canvas.height || sx + s < 0 || sy + s < 0) continue;
+          if (sx > this.viewportWidth || sy > this.viewportHeight || sx + s < 0 || sy + s < 0) continue;
           ctx.fillRect(sx, sy, s, s);
         }
       }
